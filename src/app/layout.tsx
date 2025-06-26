@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://readactify.com"),
   title: {
     default:
       "Readactify - AI-Powered Secure PDF Intelligence | Smart Redaction & Encryption",
