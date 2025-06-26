@@ -28,7 +28,7 @@ export function EncryptedText({
     if (autoStart) {
       startEncryption();
     }
-  }, [autoStart]);
+  }, [autoStart]); // startEncryption is stable, no need to include
 
   useEffect(() => {
     if (!isEncrypting) return;
