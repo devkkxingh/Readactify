@@ -120,7 +120,7 @@ export function Features() {
               <h3 className="text-2xl font-bold tracking-tight text-foreground">
                 Trusted by Security Teams Worldwide
               </h3>
-              <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+              <div className="mt-8 grid grid-cols-3 gap-4 sm:grid-cols-3">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary">99.9%</div>
                   <div className="text-sm text-muted-foreground">
@@ -133,10 +133,10 @@ export function Features() {
                     Encryption
                   </div>
                 </div>
-                <div className="text-center">
+                {/* <div className="text-center">
                   <div className="text-3xl font-bold text-primary">SOC 2</div>
                   <div className="text-sm text-muted-foreground">Compliant</div>
-                </div>
+                </div> */}
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary">24/7</div>
                   <div className="text-sm text-muted-foreground">Support</div>

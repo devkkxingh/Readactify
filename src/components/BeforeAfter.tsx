@@ -177,49 +177,51 @@ export function BeforeAfter() {
           className="mx-auto max-w-6xl"
         >
           {/* Browser-like Header */}
-          <div className="bg-muted/50 rounded-t-xl border border-b-0 p-3">
-            <div className="flex items-center justify-between">
+          <div className="bg-muted/50 rounded-t-xl border border-b-0 p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
               <div className="flex items-center space-x-3">
                 <div className="flex space-x-1.5">
                   <div className="h-3 w-3 rounded-full bg-red-500" />
                   <div className="h-3 w-3 rounded-full bg-yellow-500" />
                   <div className="h-3 w-3 rounded-full bg-green-500" />
                 </div>
-                <div className="flex items-center space-x-2">
-                  <FileText className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground">
+                <div className="flex items-center space-x-2 min-w-0">
+                  <FileText className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-sm font-medium text-foreground truncate">
                     employee-review-confidential.pdf
                   </span>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto">
                 <Button
                   onClick={handleRedactionDemo}
                   disabled={isAnimating || isEncrypting}
                   size="sm"
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
                 >
                   <Play className="h-3 w-3" />
-                  <span>Auto-Redact</span>
+                  <span className="hidden xs:inline">Auto-Redact</span>
+                  <span className="xs:hidden">Redact</span>
                 </Button>
                 <Button
                   onClick={handleEncryptionDemo}
                   disabled={isAnimating || isEncrypting}
                   size="sm"
                   variant="secondary"
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
                 >
                   <Zap className="h-3 w-3" />
-                  <span>Auto-Encrypt</span>
+                  <span className="hidden xs:inline">Auto-Encrypt</span>
+                  <span className="xs:hidden">Encrypt</span>
                 </Button>
                 <Button
                   onClick={handleReset}
                   variant="outline"
                   size="sm"
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
                 >
                   <RotateCcw className="h-3 w-3" />
-                  <span>Reset</span>
+                  <span className="hidden sm:inline">Reset</span>
                 </Button>
               </div>
             </div>
@@ -227,14 +229,14 @@ export function BeforeAfter() {
 
           {/* Document Content */}
           <div className="bg-background border rounded-b-xl shadow-2xl overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 divide-x divide-border">
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:divide-x divide-border">
               {/* Original Document - NEVER changes during encryption */}
-              <div className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-foreground">
+              <div className="p-4 sm:p-6 lg:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground">
                     Original Document
                   </h3>
-                  <div className="flex items-center space-x-2 text-sm">
+                  <div className="flex items-center space-x-2 text-xs sm:text-sm">
                     <div className="h-2 w-2 rounded-full bg-red-500" />
                     <span className="text-red-600">4 Sensitive Fields</span>
                   </div>
@@ -267,7 +269,7 @@ export function BeforeAfter() {
                       return (
                         <motion.div
                           key={index}
-                          className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
+                          className={`flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded-lg transition-all duration-300 space-y-1 sm:space-y-0 ${
                             isSensitive
                               ? isCurrentlyAnimating
                                 ? "bg-red-100 border-2 border-red-300 shadow-md"
@@ -279,11 +281,11 @@ export function BeforeAfter() {
                           }
                           transition={{ duration: 0.5 }}
                         >
-                          <span className="text-sm font-medium text-muted-foreground">
+                          <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                             {item.label}
                           </span>
                           <span
-                            className={`text-sm font-mono ${
+                            className={`text-xs sm:text-sm font-mono break-all ${
                               isSensitive ? "text-red-700" : "text-foreground"
                             }`}
                           >
@@ -299,12 +301,12 @@ export function BeforeAfter() {
               </div>
 
               {/* Secured Document - Shows encrypted results */}
-              <div className="p-8 bg-muted/20">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-foreground">
+              <div className="p-4 sm:p-6 lg:p-8 bg-muted/20 border-t lg:border-t-0">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground">
                     Secured Document
                   </h3>
-                  <div className="flex items-center space-x-2 text-sm">
+                  <div className="flex items-center space-x-2 text-xs sm:text-sm">
                     <div className="h-2 w-2 rounded-full bg-green-500" />
                     <span className="text-green-600">Protected</span>
                   </div>
@@ -348,7 +350,7 @@ export function BeforeAfter() {
                       return (
                         <motion.div
                           key={index}
-                          className={`flex justify-between items-center p-3 rounded-lg transition-all duration-300 ${
+                          className={`flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded-lg transition-all duration-300 space-y-1 sm:space-y-0 ${
                             isSensitive
                               ? shouldShowRedacted
                                 ? "bg-green-50 border border-green-200"
@@ -358,11 +360,11 @@ export function BeforeAfter() {
                               : "bg-muted/30"
                           }`}
                         >
-                          <span className="text-sm font-medium text-muted-foreground">
+                          <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                             {item.label}
                           </span>
                           <span
-                            className={`text-sm font-mono ${
+                            className={`text-xs sm:text-sm font-mono break-all ${
                               isSensitive && shouldShowRedacted
                                 ? "text-green-700"
                                 : isSensitive &&
@@ -420,32 +422,34 @@ export function BeforeAfter() {
             </div>
 
             {/* Status Bar */}
-            <div className="bg-muted/50 px-8 py-4 border-t flex items-center justify-between text-sm">
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-2">
-                  <Lock className="h-4 w-4 text-green-600" />
-                  <span className="text-green-600">AES-256 Encrypted</span>
+            <div className="bg-muted/50 px-4 sm:px-6 lg:px-8 py-3 sm:py-4 border-t text-xs sm:text-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 lg:space-x-6">
+                  <div className="flex items-center space-x-2">
+                    <Lock className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
+                    <span className="text-green-600">AES-256 Encrypted</span>
+                  </div>
+                  <div className="text-muted-foreground">
+                    Processing Time:{" "}
+                    <span className="font-medium text-foreground">
+                      {isEncrypting ? "1.2s" : "0.3s"}
+                    </span>
+                  </div>
+                  <div className="text-muted-foreground hidden sm:block">
+                    Accuracy:{" "}
+                    <span className="font-medium text-foreground">99.9%</span>
+                  </div>
                 </div>
                 <div className="text-muted-foreground">
-                  Processing Time:{" "}
+                  Mode:{" "}
                   <span className="font-medium text-foreground">
-                    {isEncrypting ? "1.2s" : "0.3s"}
+                    {isEncrypting
+                      ? "Encryption"
+                      : isAnimating
+                      ? "Redaction"
+                      : "Ready"}
                   </span>
                 </div>
-                <div className="text-muted-foreground">
-                  Accuracy:{" "}
-                  <span className="font-medium text-foreground">99.9%</span>
-                </div>
-              </div>
-              <div className="text-muted-foreground">
-                Mode:{" "}
-                <span className="font-medium text-foreground">
-                  {isEncrypting
-                    ? "Encryption"
-                    : isAnimating
-                    ? "Redaction"
-                    : "Ready"}
-                </span>
               </div>
             </div>
           </div>
@@ -457,32 +461,38 @@ export function BeforeAfter() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="mt-12 sm:mt-16 text-center"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-3xl mx-auto">
             <div>
-              <div className="text-3xl font-bold text-primary">4</div>
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
+                4
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Fields {isEncrypting ? "Encrypted" : "Redacted"}
               </div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary">100%</div>
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
+                100%
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Data Secured
               </div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary">
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
                 {isEncrypting ? "1.2s" : "0.3s"}
               </div>
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Processing Time
               </div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-primary">AI</div>
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-2xl sm:text-3xl font-bold text-primary">
+                AI
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">
                 Context Aware
               </div>
             </div>

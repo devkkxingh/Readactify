@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWaitlistForm } from "@/hooks/useWaitlistForm";
 import {
   Shield,
   FileText,
@@ -91,15 +92,10 @@ const getDocumentContent = (step: number) => {
 };
 
 export function Hero() {
-  const [email, setEmail] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle email submission
-    setEmail("");
-  };
+  const { form, onSubmit, isSubmitting, result, clearResult } =
+    useWaitlistForm("hero");
 
   const handleDemoStart = () => {
     setCurrentStep(0);
@@ -256,20 +252,69 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10"
           >
-            <form onSubmit={handleSubmit} className="mx-auto max-w-md">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mx-auto max-w-md"
+            >
+              {/* Free Offer Banner */}
+              <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg text-center">
+                <p className="text-sm font-medium text-blue-800">
+                  🎉 <span className="font-bold">Limited Time:</span> Get 6
+                  months free when we launch!
+                </p>
+                <p className="text-xs text-blue-600 mt-1">
+                  Join our waitlist to secure this exclusive offer
+                </p>
+              </div>
+
               <div className="flex gap-x-4">
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
+                  {...form.register("email")}
                   className="min-w-0 flex-auto"
                 />
-                <Button type="submit" size="lg">
-                  Join Waitlist
+                <Button type="submit" size="lg" disabled={isSubmitting}>
+                  {isSubmitting ? "Joining..." : "Join Waitlist"}
                 </Button>
               </div>
+              {form.formState.errors.email && (
+                <p className="mt-2 text-sm text-destructive">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
+              {result && (
+                <div
+                  className={`mt-3 p-3 rounded-md ${
+                    result.success
+                      ? "bg-green-50 text-green-800"
+                      : "bg-red-50 text-red-800"
+                  }`}
+                >
+                  <p className="text-sm">
+                    {result.message}
+                    {result.success && result.position && (
+                      <span className="block mt-1 font-medium">
+                        You&apos;re #{result.position} on the waitlist!
+                      </span>
+                    )}
+                  </p>
+                  {result.success && (
+                    <div className="mt-2 p-2 bg-blue-50 border border-blue-200 rounded text-blue-800">
+                      <p className="text-xs font-medium">
+                        🎉 Free Offer: Get 6 months free when we launch!
+                      </p>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={clearResult}
+                    className="mt-2 text-xs underline opacity-70 hover:opacity-100"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              )}
             </form>
           </motion.div>
 

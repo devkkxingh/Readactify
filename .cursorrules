@@ -1,0 +1,286 @@
+# Readactify - Developer Guidelines
+
+## For Developers Working on This Codebase
+
+This file contains technical guidelines, coding standards, and implementation patterns for developers working on the Readactify PDF redaction platform.
+
+**Product Focus**: Readactify is a developer-focused tool - our primary end users are developers and technical teams who need programmatic PDF redaction capabilities.
+
+**Tech Stack**: Next.js 15 + TypeScript + Tailwind CSS + Supabase + Framer Motion
+
+## Tech Stack & Architecture
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS with custom design system
+- **Components**: shadcn/ui + custom components
+- **Animations**: Framer Motion
+- **Forms**: React Hook Form + Zod validation
+- **Database**: Supabase (PostgreSQL)
+- **Icons**: Lucide React
+- **Deployment**: Vercel-ready
+
+## Code Style & Standards
+
+### TypeScript
+
+- Use strict TypeScript with proper typing
+- Prefer interfaces over types for object shapes
+- Use proper generic constraints
+- Always type function parameters and return values
+- Use const assertions where appropriate
+
+### React Components
+
+- Use functional components with hooks
+- Prefer named exports over default exports
+- Use proper prop typing with interfaces
+- Implement proper error boundaries
+- Use React.memo() for performance optimization when needed
+
+### Styling Guidelines
+
+- Use Tailwind CSS classes exclusively
+- Follow mobile-first responsive design
+- Use CSS variables defined in globals.css
+- Maintain consistent spacing using Tailwind spacing scale
+- Use semantic color names (primary, secondary, muted, etc.)
+
+### Animation Standards
+
+- Use Framer Motion for all animations
+- Implement smooth 60fps animations
+- Use consistent easing curves
+- Add proper animation delays for staggered effects
+- Ensure animations are accessible (respect prefers-reduced-motion)
+
+## File Structure & Organization
+
+### Component Structure
+
+```
+src/components/
+├── ui/           # shadcn/ui components
+├── [Feature].tsx # Feature-specific components
+└── layout/       # Layout components
+```
+
+### Page Structure
+
+```
+src/app/
+├── page.tsx      # Landing page
+├── layout.tsx    # Root layout
+├── globals.css   # Global styles
+└── [route]/      # Additional pages
+```
+
+### Utilities
+
+```
+src/lib/
+├── utils.ts      # General utilities
+├── validations.ts # Zod schemas
+├── actions.ts    # Server actions
+└── supabase.ts   # Database client
+```
+
+## Development Phases & Priorities
+
+### Current Status: Phase 7 Complete ✅
+
+- Landing page with pixel-perfect design
+- Full Supabase integration
+- Legal pages (Terms, Privacy, Contact)
+- Waitlist functionality with analytics
+- SEO optimization and structured data
+
+### Next Phase: Phase 8 - Manual Redaction & Pixel Perfect Masking
+
+**Developer-Focused Features:**
+
+1. **Manual Redaction API** - Programmatic interface for precise area selection
+2. **Pixel Perfect Masking** - Developer-controlled redaction with advanced selection tools
+3. **Interactive PDF Editor** - In-browser editing for developer testing and validation
+4. **Selection Tools** - Rectangle, circle, freehand, and polygon selection for developers
+5. **Undo/Redo Functionality** - Full editing history with granular control for developer workflows
+6. **Layer Management** - Multiple redaction layers with visibility controls for complex documents
+7. **Export Options** - Multiple format support with redaction permanence for developer integrations
+8. **Preview Mode** - Real-time preview for developer validation before export
+
+## Component Development Guidelines
+
+### New Component Checklist
+
+- [ ] TypeScript interfaces for all props
+- [ ] Responsive design (mobile-first)
+- [ ] Accessibility attributes (ARIA labels, keyboard navigation)
+- [ ] Framer Motion animations where appropriate
+- [ ] Error handling and loading states
+- [ ] Proper semantic HTML structure
+- [ ] shadcn/ui integration where possible
+
+### Form Components
+
+- Use React Hook Form for all forms
+- Implement Zod validation schemas
+- Add proper error messaging
+- Include loading states during submission
+- Implement success feedback
+- Add proper accessibility attributes
+
+### Animation Components
+
+- Use consistent animation timing (0.3s, 0.5s, 0.8s)
+- Implement proper enter/exit animations
+- Add stagger effects for lists
+- Use layout animations for smooth transitions
+- Respect user motion preferences
+
+## Database & Backend
+
+### Supabase Integration
+
+- Use Row Level Security (RLS) policies
+- Implement proper error handling
+- Use TypeScript types generated from database schema
+- Follow database naming conventions (snake_case)
+- Add proper indexing for performance
+
+### Server Actions
+
+- Use Next.js Server Actions for form submissions
+- Implement proper validation with Zod
+- Add comprehensive error handling
+- Include logging for debugging
+- Return proper success/error responses
+
+## Design System
+
+### Color Palette
+
+- Primary: Blue-based brand colors
+- Secondary: Purple accents
+- Success: Green variants
+- Warning: Orange/Yellow variants
+- Error: Red variants
+- Muted: Gray scale
+
+### Typography
+
+- Use consistent font weights (400, 500, 600, 700)
+- Maintain proper heading hierarchy (h1-h6)
+- Use consistent line heights
+- Implement proper text contrast ratios
+
+### Spacing & Layout
+
+- Use Tailwind spacing scale (4, 8, 12, 16, 24, 32, 48, 64)
+- Maintain consistent padding/margin patterns
+- Use CSS Grid and Flexbox appropriately
+- Implement proper responsive breakpoints
+
+## Performance & SEO
+
+### Performance Requirements
+
+- Core Web Vitals optimization
+- Image optimization with Next.js Image component
+- Proper code splitting and lazy loading
+- Bundle size monitoring
+- 60fps animations
+
+### SEO Standards
+
+- Complete meta tags for all pages
+- Structured data (Schema.org)
+- Proper heading hierarchy
+- Alt text for all images
+- Semantic HTML structure
+
+## Testing & Quality
+
+### Code Quality
+
+- ESLint configuration compliance
+- TypeScript strict mode
+- Proper error boundaries
+- Input validation and sanitization
+- Accessibility testing
+
+### Browser Support
+
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile responsiveness across devices
+- Progressive enhancement approach
+- Graceful degradation for older browsers
+
+## Security Considerations
+
+### Data Protection
+
+- Input validation and sanitization
+- Proper authentication flow preparation
+- Secure API endpoints
+- Environment variable management
+- GDPR compliance ready
+
+### PDF Processing Security
+
+- File type validation
+- File size limits
+- Content scanning for malicious files
+- Secure temporary file handling
+- Proper cleanup of processed files
+
+## Future Development Notes
+
+### Phase 9: Advanced Features
+
+- User authentication system
+- User dashboard and document management
+- Payment integration (Stripe)
+- Advanced analytics and reporting
+
+### Phase 10: Scale & Optimize
+
+- Performance monitoring
+- Internationalization support
+- Advanced SEO features
+- PWA capabilities
+
+## Development Workflow
+
+### Git Practices
+
+- Use conventional commit messages
+- Create feature branches for new development
+- Implement proper code review process
+- Maintain clean commit history
+
+### Documentation
+
+- Update README.md for new features
+- Document component props and usage
+- Maintain API documentation
+- Update roadmap progress
+
+## Emergency Procedures
+
+### Bug Fixes
+
+- Prioritize security vulnerabilities
+- Fix critical user-facing issues immediately
+- Test thoroughly before deployment
+- Implement proper rollback procedures
+
+### Performance Issues
+
+- Monitor Core Web Vitals
+- Optimize bundle size regularly
+- Profile and fix memory leaks
+- Implement proper caching strategies
+
+---
+
+This project represents a production-ready, enterprise-grade SaaS landing page with comprehensive backend integration. Follow these guidelines to maintain code quality, performance, and user experience standards while implementing new features from the roadmap.

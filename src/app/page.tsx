@@ -12,18 +12,42 @@ export const metadata: Metadata = {
     canonical: "https://readactify.com",
   },
   openGraph: {
-    title: "Readactify - The Future of Secure PDF Intelligence",
+    title: "Readactify - AI-Powered Secure PDF Intelligence",
     description:
-      "Join thousands of enterprises transforming their PDF workflow with AI-powered secure document processing.",
+      "Transform your PDF workflow with enterprise-grade AI redaction, encryption, and summarization. Join thousands of professionals securing sensitive documents.",
     url: "https://readactify.com",
+    siteName: "Readactify",
+    type: "website",
+    locale: "en_US",
     images: [
       {
-        url: "/og-home.jpg",
+        url: "https://readactify.com/og-home.jpg",
         width: 1200,
         height: 630,
-        alt: "Readactify Homepage - Secure PDF Intelligence",
+        alt: "Readactify - AI-Powered Secure PDF Intelligence Platform",
+        type: "image/jpeg",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Readactify - AI-Powered Secure PDF Intelligence",
+    description:
+      "Transform your PDF workflow with enterprise-grade AI redaction, encryption, and summarization.",
+    images: ["https://readactify.com/og-home.jpg"],
+    creator: "@readactify",
+    site: "@readactify",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 

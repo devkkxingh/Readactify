@@ -1,26 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useWaitlistForm } from "@/hooks/useWaitlistForm";
 import { Shield, FileText, CheckCircle } from "lucide-react";
 
 export function FooterCTA() {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle email submission
-    setIsSubmitted(true);
-    setEmail("");
-
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
-  };
+  const { form, onSubmit, isSubmitting, result, clearResult } =
+    useWaitlistForm("footer_cta");
 
   return (
     <section
@@ -71,33 +60,80 @@ export function FooterCTA() {
             viewport={{ once: true }}
             className="mt-10"
           >
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="mx-auto max-w-md">
+            {result && result.success ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center space-y-3"
+              >
+                <div className="flex items-center space-x-2 text-green-600">
+                  <CheckCircle className="h-6 w-6" />
+                  <span className="text-lg font-medium">
+                    Successfully added to waitlist!
+                  </span>
+                </div>
+                {result.position && (
+                  <p className="text-sm text-muted-foreground">
+                    You&apos;re #{result.position} on the waitlist!
+                  </p>
+                )}
+                <button
+                  onClick={clearResult}
+                  className="text-sm text-primary hover:underline"
+                >
+                  Join another email
+                </button>
+              </motion.div>
+            ) : (
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="mx-auto max-w-md"
+              >
+                {/* Free Offer Banner */}
+                <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg text-center">
+                  <p className="text-sm font-medium text-blue-800">
+                    🎉 <span className="font-bold">Limited Time:</span> Get 6
+                    months free when we launch!
+                  </p>
+                  <p className="text-xs text-blue-600 mt-1">
+                    Join our waitlist to secure this exclusive offer
+                  </p>
+                </div>
+
                 <div className="flex gap-x-4">
                   <Input
                     type="email"
                     placeholder="Enter your email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
+                    {...form.register("email")}
                     className="min-w-0 flex-auto text-base h-12"
                   />
-                  <Button type="submit" size="lg" className="px-8">
-                    Join Waitlist
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="px-8"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Joining..." : "Join Waitlist"}
                   </Button>
                 </div>
+                {form.formState.errors.email && (
+                  <p className="mt-2 text-sm text-destructive text-center">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
+                {result && !result.success && (
+                  <div className="mt-3 p-3 rounded-md bg-red-50 text-red-800 text-center">
+                    <p className="text-sm">{result.message}</p>
+                    <button
+                      type="button"
+                      onClick={clearResult}
+                      className="mt-2 text-xs underline opacity-70 hover:opacity-100"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                )}
               </form>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center justify-center space-x-2 text-green-600"
-              >
-                <CheckCircle className="h-6 w-6" />
-                <span className="text-lg font-medium">
-                  Successfully added to waitlist!
-                </span>
-              </motion.div>
             )}
 
             <motion.p
@@ -113,7 +149,7 @@ export function FooterCTA() {
           </motion.div>
 
           {/* Trust indicators */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -132,7 +168,7 @@ export function FooterCTA() {
               <Shield className="h-4 w-4" />
               <span>ISO 27001</span>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </section>
@@ -157,15 +193,24 @@ export function Footer() {
 
           {/* Links */}
           <div className="flex space-x-8 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">
+            <Link
+              href="/privacy"
+              className="hover:text-foreground transition-colors"
+            >
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-foreground transition-colors">
+            </Link>
+            <Link
+              href="/terms"
+              className="hover:text-foreground transition-colors"
+            >
               Terms of Service
-            </a>
-            <a href="#" className="hover:text-foreground transition-colors">
+            </Link>
+            <Link
+              href="/contact"
+              className="hover:text-foreground transition-colors"
+            >
               Contact Us
-            </a>
+            </Link>
           </div>
 
           {/* Copyright */}
