@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useWaitlistForm } from "@/hooks/useWaitlistForm";
-import { Shield, FileText, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export function FooterCTA() {
   const { form, onSubmit, isSubmitting, result, clearResult } =
@@ -14,7 +14,7 @@ export function FooterCTA() {
   return (
     <section
       id="waitlist"
-      className="py-24 sm:py-32 bg-gradient-to-r from-primary/5 via-background to-primary/5"
+      className="py-10 sm:py-10 bg-gradient-to-r from-primary/5 via-background to-primary/5"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
@@ -25,10 +25,7 @@ export function FooterCTA() {
             viewport={{ once: true }}
             className="flex justify-center mb-8"
           >
-            <div className="relative">
-              <Shield className="h-16 w-16 text-primary" />
-              <FileText className="absolute -top-2 -right-2 h-8 w-8 text-primary/60" />
-            </div>
+            <Logo size="xl" showText={false} />
           </motion.div>
 
           <motion.h2
@@ -181,37 +178,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="relative">
-              <Shield className="h-6 w-6 text-primary" />
-              <FileText className="absolute -top-1 -right-1 h-3 w-3 text-primary/60" />
-            </div>
-            <span className="text-lg font-bold text-foreground">
-              Readactify
-            </span>
-          </div>
-
-          {/* Links */}
-          <div className="flex space-x-8 text-sm text-muted-foreground">
-            <Link
-              href="/privacy"
-              className="hover:text-foreground transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms"
-              className="hover:text-foreground transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-foreground transition-colors"
-            >
-              Contact Us
-            </Link>
-          </div>
+          <Logo size="md" />
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">

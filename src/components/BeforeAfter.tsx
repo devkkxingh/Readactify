@@ -84,6 +84,10 @@ export function BeforeAfter() {
   const [isEncrypting, setIsEncrypting] = useState(false);
   const [encryptingField, setEncryptingField] = useState(-1);
   const [encryptedFields, setEncryptedFields] = useState(new Set());
+  const [isManualMode, setIsManualMode] = useState(false);
+  const [manuallyRedactedFields, setManuallyRedactedFields] = useState(
+    new Set()
+  );
 
   const handleRedactionDemo = () => {
     setIsAnimating(true);
@@ -134,6 +138,31 @@ export function BeforeAfter() {
     });
   };
 
+  const handleManualMode = () => {
+    setIsManualMode(true);
+    setShowRedacted(false);
+    setIsAnimating(false);
+    setCurrentField(-1);
+    setIsEncrypting(false);
+    setEncryptingField(-1);
+    setEncryptedFields(new Set());
+    setManuallyRedactedFields(new Set());
+  };
+
+  const handleFieldClick = (fieldId: number) => {
+    if (isManualMode) {
+      setManuallyRedactedFields((prev) => {
+        const newSet = new Set(prev);
+        if (newSet.has(fieldId)) {
+          newSet.delete(fieldId);
+        } else {
+          newSet.add(fieldId);
+        }
+        return newSet;
+      });
+    }
+  };
+
   const handleReset = () => {
     setShowRedacted(false);
     setIsAnimating(false);
@@ -141,10 +170,12 @@ export function BeforeAfter() {
     setIsEncrypting(false);
     setEncryptingField(-1);
     setEncryptedFields(new Set());
+    setIsManualMode(false);
+    setManuallyRedactedFields(new Set());
   };
 
   return (
-    <section className="py-24 sm:py-32 bg-gradient-to-b from-background to-muted/30">
+    <section className="py-10 sm:py-10 bg-gradient-to-b from-background to-muted/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center mb-16">
           <motion.h2
@@ -195,24 +226,35 @@ export function BeforeAfter() {
               <div className="flex items-center space-x-1 sm:space-x-2 overflow-x-auto">
                 <Button
                   onClick={handleRedactionDemo}
-                  disabled={isAnimating || isEncrypting}
+                  disabled={isAnimating || isEncrypting || isManualMode}
                   size="sm"
                   className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
                 >
                   <Play className="h-3 w-3" />
                   <span className="hidden xs:inline">Auto-Redact</span>
-                  <span className="xs:hidden">Redact</span>
+                  <span className="xs:hidden">Auto Redact</span>
+                </Button>
+                <Button
+                  onClick={handleManualMode}
+                  disabled={isAnimating || isEncrypting}
+                  size="sm"
+                  variant={isManualMode ? "default" : "secondary"}
+                  className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
+                >
+                  <FileText className="h-3 w-3" />
+                  <span className="hidden xs:inline">Manual-Redact</span>
+                  <span className="xs:hidden">Manual</span>
                 </Button>
                 <Button
                   onClick={handleEncryptionDemo}
-                  disabled={isAnimating || isEncrypting}
+                  disabled={isAnimating || isEncrypting || isManualMode}
                   size="sm"
                   variant="secondary"
                   className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0"
                 >
                   <Zap className="h-3 w-3" />
                   <span className="hidden xs:inline">Auto-Encrypt</span>
-                  <span className="xs:hidden">Encrypt</span>
+                  <span className="xs:hidden">Auto Encrypt</span>
                 </Button>
                 <Button
                   onClick={handleReset}
@@ -233,9 +275,16 @@ export function BeforeAfter() {
               {/* Original Document - NEVER changes during encryption */}
               <div className="p-4 sm:p-6 lg:p-8">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground">
-                    Original Document
-                  </h3>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground">
+                      Original Document
+                    </h3>
+                    {isManualMode && (
+                      <p className="text-xs text-blue-600 mt-1">
+                        Click on sensitive fields to redact them
+                      </p>
+                    )}
+                  </div>
                   <div className="flex items-center space-x-2 text-xs sm:text-sm">
                     <div className="h-2 w-2 rounded-full bg-red-500" />
                     <span className="text-red-600">4 Sensitive Fields</span>
@@ -273,6 +322,8 @@ export function BeforeAfter() {
                             isSensitive
                               ? isCurrentlyAnimating
                                 ? "bg-red-100 border-2 border-red-300 shadow-md"
+                                : isManualMode
+                                ? "bg-red-50 border border-red-200 cursor-pointer hover:bg-red-100"
                                 : "bg-red-50 border border-red-200"
                               : "bg-muted/30"
                           }`}
@@ -280,6 +331,11 @@ export function BeforeAfter() {
                             isCurrentlyAnimating ? { scale: [1, 1.02, 1] } : {}
                           }
                           transition={{ duration: 0.5 }}
+                          onClick={() =>
+                            isSensitive &&
+                            typeof item.id === "number" &&
+                            handleFieldClick(item.id)
+                          }
                         >
                           <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                             {item.label}
@@ -337,7 +393,10 @@ export function BeforeAfter() {
                         showRedacted ||
                         (isAnimating &&
                           currentField >=
-                            (typeof item.id === "number" ? item.id : -1));
+                            (typeof item.id === "number" ? item.id : -1)) ||
+                        (isManualMode &&
+                          typeof item.id === "number" &&
+                          manuallyRedactedFields.has(item.id));
                       const shouldShowEncrypted = encryptedFields.has(
                         typeof item.id === "number" ? item.id : -1
                       );

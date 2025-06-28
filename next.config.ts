@@ -100,8 +100,7 @@ const nextConfig: NextConfig = {
   generateEtags: true,
 
   // Static file optimization
-  assetPrefix:
-    process.env.NODE_ENV === "production" ? "https://readactify.com" : "",
+  // assetPrefix: process.env.NODE_ENV === "production" ? "https://readactify.com" : "",
 
   // Trailing slash handling for consistent URLs
   trailingSlash: false,

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useWaitlistForm } from "@/hooks/useWaitlistForm";
+
 import {
   Shield,
   FileText,
@@ -16,10 +17,10 @@ import {
   CheckCircle,
   AlertTriangle,
 } from "lucide-react";
+import { Logo } from "./Logo";
 
 const navigation = [
   { name: "Features", href: "#features" },
-  { name: "Pricing", href: "#pricing" },
   { name: "Waitlist", href: "#waitlist" },
 ];
 
@@ -113,7 +114,7 @@ export function Hero() {
   const documentContent = getDocumentContent(currentStep);
 
   return (
-    <div className="relative isolate">
+    <div className="relative isolate bg-white">
       {/* Navigation */}
       <nav
         className="flex items-center justify-between p-6 lg:px-8"
@@ -121,22 +122,10 @@ export function Hero() {
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Readactify</span>
-            <div className="flex items-center space-x-3">
-              <div className="relative">
-                <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center shadow-lg">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                <div className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-blue-500 flex items-center justify-center">
-                  <FileText className="h-2.5 w-2.5 text-white" />
-                </div>
-              </div>
-              <span className="text-2xl font-bold text-foreground">
-                Readactify
-              </span>
-            </div>
+            <Logo />
           </a>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -147,21 +136,19 @@ export function Hero() {
             <Menu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-8 lg:items-center">
           {navigation.map((item) => (
             <a
               key={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm font-semibold leading-6 text-foreground hover:text-primary transition-colors"
             >
               {item.name}
             </a>
           ))}
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button variant="outline" size="sm">
-            Sign in
-          </Button>
+          <a href="#waitlist">
+            <Button size="sm">Join Waitlist</Button>
+          </a>
         </div>
       </nav>
 
@@ -174,11 +161,11 @@ export function Hero() {
               <a href="#" className="-m-1.5 p-1.5">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
-                    <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center shadow-lg">
-                      <Shield className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-blue-500 flex items-center justify-center">
-                      <FileText className="h-2.5 w-2.5 text-white" />
+                    <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-green-400 via-blue-500 to-blue-600 flex items-center justify-center shadow-lg">
+                      <div className="relative">
+                        <Shield className="h-6 w-6 text-white" />
+                        <div className="absolute inset-0 flex items-center justify-center"></div>
+                      </div>
                     </div>
                   </div>
                   <span className="text-2xl font-bold text-foreground">
@@ -210,9 +197,13 @@ export function Hero() {
                   ))}
                 </div>
                 <div className="py-6">
-                  <Button variant="outline" className="w-full">
-                    Sign in
-                  </Button>
+                  <a
+                    href="#waitlist"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-foreground hover:bg-muted"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Join Waitlist
+                  </a>
                 </div>
               </div>
             </div>
@@ -221,17 +212,28 @@ export function Hero() {
       )}
 
       {/* Hero content */}
-      <div className="mx-auto max-w-4xl px-6 py-24 sm:py-32 lg:px-8">
+      <div className="mx-auto max-w-5xl px-6 py-16 sm:py-20 lg:px-8">
         <div className="text-center">
-          <motion.h1
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl font-bold tracking-tight text-foreground sm:text-6xl bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent"
+            className="mb-8"
           >
-            Readactify: The Future of{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Secure PDF Intelligence
+            <div className="inline-flex items-center rounded-full border border-blue-200 bg-gradient-to-r from-green-50 to-blue-50 px-4 py-2 text-sm font-medium text-blue-700">
+              🚀 Now in Development - Join the Waitlist
+            </div>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-5xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+          >
+            <span className="block">Secure PDF</span>
+            <span className="block mb-4 px-6 py-2 bg-gradient-to-r from-green-400 via-blue-500 to-blue-600 text-white rounded-lg inline-block">
+              Intelligence
             </span>
           </motion.h1>
 
@@ -239,42 +241,47 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-6 text-lg leading-8 text-muted-foreground max-w-2xl mx-auto"
+            className="mt-8 text-xl leading-8 text-muted-foreground max-w-3xl mx-auto"
           >
-            AI-powered redaction, encryption, and smart summarization — right
-            where you read. Secure sensitive data with enterprise-grade
-            protection and intelligent document processing.
+            AI-powered redaction, encryption, and smart summarization for
+            enterprise documents. Protect sensitive data with military-grade
+            security and intelligent processing.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-10"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="mt-12"
           >
+            {/* Free Offer Banner */}
+            <div className="mb-8 mx-auto max-w-lg p-4 bg-gradient-to-r from-blue-50 via-purple-50 to-blue-50 border border-blue-200 rounded-xl text-center shadow-sm">
+              <p className="text-sm font-semibold text-blue-800">
+                🎉 <span className="font-bold">Limited Time Offer:</span> Get 6
+                months free when we launch!
+              </p>
+              <p className="text-xs text-blue-600 mt-1">
+                Join our waitlist to secure this exclusive early access offer
+              </p>
+            </div>
+
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="mx-auto max-w-md"
+              className="mx-auto max-w-lg"
             >
-              {/* Free Offer Banner */}
-              <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg text-center">
-                <p className="text-sm font-medium text-blue-800">
-                  🎉 <span className="font-bold">Limited Time:</span> Get 6
-                  months free when we launch!
-                </p>
-                <p className="text-xs text-blue-600 mt-1">
-                  Join our waitlist to secure this exclusive offer
-                </p>
-              </div>
-
-              <div className="flex gap-x-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter your email address"
                   {...form.register("email")}
-                  className="min-w-0 flex-auto"
+                  className="min-w-0 flex-auto h-12 text-base "
                 />
-                <Button type="submit" size="lg" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                  className="h-12 px-8"
+                >
                   {isSubmitting ? "Joining..." : "Join Waitlist"}
                 </Button>
               </div>
@@ -316,16 +323,52 @@ export function Hero() {
                 </div>
               )}
             </form>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="mt-4 text-sm text-muted-foreground"
+            >
+              Join 1,000+ security professionals. No spam, unsubscribe anytime.
+            </motion.p>
+          </motion.div>
+
+          {/* Trust Indicators */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground"
+          >
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-green-400 to-green-500 rounded-full flex items-center justify-center">
+                <Shield className="h-3 w-3 text-white" />
+              </div>
+              <span>Enterprise Security</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center">
+                <Lock className="h-3 w-3 text-white" />
+              </div>
+              <span>AES-256 Encryption</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                <Eye className="h-3 w-3 text-white" />
+              </div>
+              <span>99.9% Accuracy</span>
+            </div>
           </motion.div>
 
           {/* Interactive Demo Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="mt-16 flow-root sm:mt-24"
+            transition={{ duration: 1, delay: 0.7 }}
+            className="mt-20 flow-root sm:mt-28"
           >
-            <div className="relative rounded-xl bg-muted/30 p-8 ring-1 ring-border backdrop-blur-sm">
+            <div className="relative rounded-2xl bg-gradient-to-br from-background to-muted/50 p-8 ring-1 ring-border backdrop-blur-sm shadow-2xl">
               {/* Processing Steps */}
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-6">
@@ -336,9 +379,9 @@ export function Hero() {
                     onClick={handleDemoStart}
                     variant="outline"
                     size="sm"
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-2 bg-gradient-to-r from-primary/10 to-blue-500/10 border-primary/20 hover:from-primary/20 hover:to-blue-500/20"
                   >
-                    <Zap className="h-4 w-4" />
+                    <Zap className="h-4 w-4 text-primary" />
                     <span>Run Demo</span>
                   </Button>
                 </div>

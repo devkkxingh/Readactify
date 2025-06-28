@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const characters =
@@ -24,11 +24,16 @@ export function EncryptedText({
   const [displayText, setDisplayText] = useState(text);
   const [isEncrypting, setIsEncrypting] = useState(false);
 
+  const startEncryption = useCallback(() => {
+    setDisplayText(text);
+    setIsEncrypting(true);
+  }, [text]);
+
   useEffect(() => {
     if (autoStart) {
       startEncryption();
     }
-  }, [autoStart]); // startEncryption is stable, no need to include
+  }, [autoStart, startEncryption]);
 
   useEffect(() => {
     if (!isEncrypting) return;
@@ -70,11 +75,6 @@ export function EncryptedText({
 
     return () => clearInterval(interval);
   }, [text, duration, isEncrypting, onComplete]);
-
-  const startEncryption = () => {
-    setDisplayText(text);
-    setIsEncrypting(true);
-  };
 
   return (
     <motion.span
